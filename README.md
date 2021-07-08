@@ -50,3 +50,9 @@ Using these values of precision and recall, I have calculated the F1 Score.
 *Note*  For a more mathematical representation, please look at the documentation for same in the notebook **Assignment9_3pplquora.ipynb**
 
 ### BERT Score
+## Implementation and Discussion
+### Precision, Recall and F1 Score 
+### BLEU Score
+
+### Perplexity
+### BERT Score
