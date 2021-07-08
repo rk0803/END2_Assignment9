@@ -23,7 +23,7 @@ Here **tj** represents actual class is **j** and predicted class is also **j** <
 and **fij** represents actual class is **i** and predicted (falsely) class is **j**  </br>
  **Precision** is defined as Number of correct predictions of a class out of all the predictions of that class. </br>
  So for  **j**th class, total false predicted, false positives **fpj** by summing over all **fij**, for **i** not equal **j**. (as shown)</br> 
- ![image](https://user-images.githubusercontent.com/82941475/124909312-ecf7fc80-e007-11eb-9e35-03a667844277.png)
+ ![image](https://user-images.githubusercontent.com/82941475/124909627-4d873980-e008-11eb-9610-8c2e65048640.png)
  Precision = (tj)/(t + fpj)  </br>
  
  **Recall** is defined as Number of correct predictions of a class out of actual instances in the dataset for that class.</br>
