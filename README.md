@@ -8,6 +8,7 @@ Notebook **Assignment9_1PRF1.ipynb** contains the implementation of Metric 1, i.
 Notebook **Assignment9_3pplquora.ipynb** contains the implementation of Metric 3 i.e.  </br>
 Metric 2 and 4 are not implemented. </br>
 Here is discussion on these. </br>
+## Metrics
 ### Precision, Recall and F1 Score 
 _Note_: For a more mathematical representation, please look at the documentation for same in the notebook **Assignment9_PRF1.ipynb**
 Here I have taken a multiclass classification problem (Stanford Sentiment Aanalysis).
@@ -49,3 +50,10 @@ Now, what would be situations where we want **fpj** to be as low as possible? So
 
 Now in our scenario, all the classes are equally important, i.e. there is not a cost associated for misclassification of a certain class. So, I have taken the average of the precision and recall, and that becomes the precision and recall of the model.
 Using these values of precision and recall, I have calculated the F1 Score.
+
+### BLEU Score
+
+### Perplexity
+*Note*  For a more mathematical representation, please look at the documentation for same in the notebook **Assignment9_3pplquora.ipynb**
+
+### BERT Score
