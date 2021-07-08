@@ -22,13 +22,13 @@ The confusion matrix in this case will look something like this</br>
 Here **tj** represents actual class is **j** and predicted class is also **j** </br>
 and **fij** represents actual class is **i** and predicted (falsely) class is **j**  </br>
  **Precision** is defined as Number of correct predictions of a class out of all the predictions of that class. </br>
- So for  **j**th class, total false predicted, false positives **fpj** by summing over all **fij**, for **i** not equal **j**. (as shown)</br> 
+ So for  **j**th class, total false predicted, false positives **fpj** by summing over all **fij**, for **i** not equal **j**.</br> 
  ![image](https://user-images.githubusercontent.com/82941475/124909627-4d873980-e008-11eb-9610-8c2e65048640.png)
  Precision = (tj)/(t + fpj)  </br>
  
  **Recall** is defined as Number of correct predictions of a class out of actual instances in the dataset for that class.</br>
-So for **j**th class, total   instances for  **j** th class, which are incorrectly predicted,i.e. **fnj** is calculated by summing over all **fji**, for **i** not equal **j** as shown:
-![image](https://user-images.githubusercontent.com/82941475/124909312-ecf7fc80-e007-11eb-9e35-03a667844277.png)
+So for **j**th class, total   instances for  **j** th class, which are incorrectly predicted,i.e. **fnj** is calculated by summing over all **fji**, for **i** not equal **j** </br>
+![image](https://user-images.githubusercontent.com/82941475/124909708-67288100-e008-11eb-884b-917d9f1d8f10.png)
  Recall =(tj)/(tj + fnj) </br>
  **F1 Score** is the weigthed average of precision and recall and is defined as the harmonic mean of the two. so </br>
  F1 score= (2 * precision * recall )/(precision + recall)  </br>
