@@ -4,6 +4,7 @@ Assignment 9 is about implementing different metrics:
 2. Bleu Score
 3. Perplexity
 4. BERT Score
+</br>
 Notebook **Assignment9_1PRF1.ipynb** contains the implementation of Metric 1, i.e. Precision, Recall and F1 Score </br>
 Notebook **Assignment9_3pplquora.ipynb** contains the implementation of Metric 3 i.e.  </br>
 Metric 2 and 4 are not implemented. </br>
@@ -133,7 +134,25 @@ epoch | Train Loss | Train Acc | Train Precision | Train Recall | Train F1 Score
   
  ####  Results discussion
  As can be seen as the model learns aligns itself to the training data ( i.e loss reduces), precision, recall and hence f1 score become better for the training data. When the model is evaluated on the test data (unseen data) , the results are comparable.
-  ### BLEU Score
+### BLEU Score
 
 ### Perplexity
+
+```code
+#Code for perplexity
+criterion = nn.CrossEntropyLoss(ignore_index = TRG_PAD_IDX)
+def prplxity(l):
+  ppl=math.exp(l)
+  return ppl
+```
+#### Training Log
+epoch | Train Loss | Train PPL |  Test Loss | Test PPL
+-----|----------|---------|----------------|-------------
+ 01 |  2.990 |  19.893 | 	3.761 |   42.991
+ 02 |  2.753 |  15.688 	3.672 |  39.312
+ 03 |  2.576 |  13.147 |	  3.580 |   35.856
+ 04 | 2.433 |   11.396 | 	  3.599 |    36.571
+ 05 |  2.303 |  10.003 | 	  3.581 |    35.924
+#### Discussion
+
 ### BERT Score
