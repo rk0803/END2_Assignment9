@@ -50,11 +50,11 @@ Using these values of precision and recall, I have calculated the F1 Score.
 *Note*  For a more mathematical representation, please look at the documentation for same in the notebook **Assignment9_3pplquora.ipynb**
 
 In the context of Natural Language Processing, perplexity is one way to evaluate language models. is not just enough to produce text; we also need a way to measure the quality of the produced text. One such way is to measure how surprised or **perplexed** the RNN was to see the output given the input. That is, if the cross-entropy loss for an input  **xi**  and its corresponding output  **yi**  is  **loss(xi,yi)**  , then the perplexity would be as follows: ![formula](https://render.githubusercontent.com/render/math?math=\P(xi,yi)=e^{loss(xi,yi)})
-Using this, we can compute the average perplexity for a training dataset of size M as:  PPL(Datasettrain)=1M∑MiP(xi,yi) 
+Using this, we can compute the average perplexity for a training dataset of size M as:  ![formula](https://render.githubusercontent.com/render/math?math=\PPL(Datasettrain)=\frac{1}{M}\sum_{i}^{M}P(xi,yi) )
 
 Question now is what is cross entropy?
 Lets first understand the definition of entropy given by Shannon.
-Shannon's Entropy is defined as  E(p)=−∑ni=1p(xi)logbp(xi) 
+Shannon's Entropy is defined as  ![formula](https://render.githubusercontent.com/render/math?math=\E(p)=-\sum_{i}^{n}x_{i}log_{b}p(x_{i}) )
 where  b  is the base of logarithm used,  n  is the number of states, and  p(xi)  is the probability of system being in state  i , and  ∑ni=1p(xi)=1 .
 
 So, Shannon entropy tells us that the if a system can be in, say, four possible states, and we know the probability of the system being in any one of the states, then for an infintely long sequence of states, how much minimum memory do we need to store the state of the system.
