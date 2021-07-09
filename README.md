@@ -6,8 +6,9 @@ Assignment 9 is about implementing different metrics:
 4. BERT Score
 
 Notebook **Assignment9_1PRF1.ipynb** contains the implementation of Metric 1, i.e. Precision, Recall and F1 Score </br>
-Notebook **Assignment9_3pplquora.ipynb** contains the implementation of Metric 3 i.e.  </br>
-Metric 2 and 4 are not implemented. </br>
+Notebook **Assignment9_2BLEU.ipynb** uses the implementation of BLEU Score </br>
+Notebook **Assignment9_3pplquora.ipynb** contains the implementation of Metric 3 i.e.  Perplexity </br>
+Metric  4 is not implemented. </br>
 Here is discussion on these. </br>
 ## Metrics
 ### Precision, Recall and F1 Score 
