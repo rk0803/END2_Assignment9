@@ -154,5 +154,6 @@ epoch | Train Loss | Train PPL |  Test Loss | Test PPL
  04 | 2.433 |   11.396 | 	  3.599 |    36.571
  05 |  2.303 |  10.003 | 	  3.581 |    35.924
 #### Discussion
+![image](https://user-images.githubusercontent.com/82941475/125026619-9f7c9d80-e0a2-11eb-9013-9599931e5c45.png)
 
 ### BERT Score
