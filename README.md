@@ -4,10 +4,11 @@ Assignment 9 is about implementing different metrics:
 2. Bleu Score
 3. Perplexity
 4. BERT Score
-</br>
+
 Notebook **Assignment9_1PRF1.ipynb** contains the implementation of Metric 1, i.e. Precision, Recall and F1 Score </br>
-Notebook **Assignment9_3pplquora.ipynb** contains the implementation of Metric 3 i.e.  </br>
-Metric 2 and 4 are not implemented. </br>
+Notebook **Assignment9_2BLEU.ipynb** uses the implementation of BLEU Score </br>
+Notebook **Assignment9_3pplquora.ipynb** contains the implementation of Metric 3 i.e.  Perplexity </br>
+Metric  4 is not implemented. </br>
 Here is discussion on these. </br>
 ## Metrics
 ### Precision, Recall and F1 Score 
@@ -46,6 +47,20 @@ Now in our scenario, all the classes are equally important, i.e. there is not a 
 Using these values of precision and recall, I have calculated the F1 Score.
 
 ### BLEU Score
+Bilgual Evaluation Understudy (BLEU) is a metric for automatically evaluating machine-translated text. The BLEU score is a number between zero and one that measures the similarity of the machine-translated text to a set of high quality reference translations. A value of 0 means that the machine-translated output has no overlap with the reference translation (low quality) while a value of 1 means there is perfect overlap with the reference translations (high quality). The general guideline for interpreting the BLEU score, as published on google cloud is as below: </br>
+
+##### BLEU Score	(in percent) Interpretation
+Score | Interpretation
+-------|-------------
+< 10	| Almost useless
+10 - 19	| Hard to get the gist
+20 - 29	| The gist is clear, but has significant grammatical errors
+30 - 40	| Understandable to good translations
+40 - 50	 | High quality translations
+50 - 60	| Very high quality, adequate, and fluent translations
+> 60	| Quality often better than human
+
+BLEU is a Corpus-based Metric and doesn't generall perform well to evaluate single sentences. It also does not distinguish between content and function words, that is, a dropped function word like "a" gets the same penalty as if the name "NASA" were erroneously replaced with "ESA". It should not be used when evaluating the translation on semantic structures. Prior to computing the BLEU score, both the reference and candidate translations are normalized and tokenized. The choice of normalization and tokenization steps can  affect the final BLEU score to a large extent.
 
 ### Perplexity
 *Note*  For a more mathematical representation, please look at the documentation for same in the notebook **Assignment9_3pplquora.ipynb**
@@ -135,6 +150,16 @@ epoch | Train Loss | Train Acc | Train Precision | Train Recall | Train F1 Score
  ####  Results discussion
  As can be seen as the model learns aligns itself to the training data ( i.e loss reduces), precision, recall and hence f1 score become better for the training data. When the model is evaluated on the test data (unseen data) , the results are comparable.
 ### BLEU Score
+Bleu Score directly is not implemented but is used, while translating from German to English. Here is a snapshot of the training log.
+#### Training Log
+
+epoch | Train Loss | Train PPL | Valid Loss | Valid PPL | Train Bleu Score | Test Bleu Score 
+-----|----------|---------|----------------|-----------|--------|--------
+1    |  3.253 |  25.875 | 3.900 |   49.421 |   0.169 |    0.152
+2 | 2.779 |  16.108 | 3.684 |   39.814 |	 0.198 |  0.172
+
+It was a less than optimal implementation and each epoch was taking around 20 minutes. After 2 epochs error started coming. I will have to investigate further on this.
+But it can be seen that in second epoch % bleu score moved from 16.9 to 19.8.  This is just inside the range where the model can be said to be not able to get the gist.
 
 ### Perplexity
 
@@ -149,10 +174,25 @@ def prplxity(l):
 epoch | Train Loss | Train PPL |  Test Loss | Test PPL
 -----|----------|---------|----------------|-------------
  01 |  2.990 |  19.893 | 	3.761 |   42.991
- 02 |  2.753 |  15.688 	3.672 |  39.312
+ 02 |  2.753 |  15.688  |	3.672 |  39.312
  03 |  2.576 |  13.147 |	  3.580 |   35.856
  04 | 2.433 |   11.396 | 	  3.599 |    36.571
  05 |  2.303 |  10.003 | 	  3.581 |    35.924
 #### Discussion
+The loss curve plot below shows that training loss steadliy goes down while the test loss fluctuates. </br>
+![image](https://user-images.githubusercontent.com/82941475/125026619-9f7c9d80-e0a2-11eb-9013-9599931e5c45.png) </br>
+The Perplexity  curve plot below shows that training perplexity steadliy goes down while the test perplexity fluctuates, in line with loss results.</br>
+![image](https://user-images.githubusercontent.com/82941475/125026762-de125800-e0a2-11eb-98bb-5b70932012df.png) </br>
+
+It can be seen that the train perplexity is gradully reducing with each epoch, as the model is getting better in predicting the text based on what it has seen. So it slowly aligns itself with seen examples and adjusts the probabilites better. So the cross entropy loss reducing leading to a low value for training perplexity. However, the validation perplexity is fluctuating significantly. This is expected because what we are essentially evaluating in the validation perplexity is our model's ability to predict a unseen text based on our learning on training data. Since language can be quite difficult to model, this is a very difficult task, and these fluctuations are natural.
+
+Also it can be seen that fluctuations in perplexity are in line with fluctuations in the loss curve.
 
 ### BERT Score
+I have not implemented this metric.
+
+#### Team Members
+Ritambhra Korpal </br>
+Chaitanya Vanapamala </br>
+Pralay Ramteke </br>
+Pallavi</br>
