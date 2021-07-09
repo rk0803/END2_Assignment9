@@ -82,14 +82,58 @@ So as the model learns with each epoch, making its probability distribution  q ,
 BERTScore computes a similarity score for each token in the candidate sentence with each token in the reference sentence. However, instead of exact matches, we compute token similarity using contextual embeddings. We evaluate using the outputs of 363 machine translation and image captioning systems. BERTScore correlates better with human judgments and provides stronger model selection performance than existing metrics
 According to a research study, there are two major drawbacks in n-gram-based metrics. to be able to judge effectiveness of praphrasing. For example, given the reference, *"people like foreign cars"*, BLEU score often gives a higher score to *"people like visiting places abroad"* instead of  *"consumers prefer imported cars"*. Here, even though the sentence is semantically correct, it gets a lower score and performance of the model is underestimated. Thus, instead of counting tokens matching, as in BLEU, we compute similarity score is calculated using contextualized token embeddings, which works better if there needs to be paraphrase detection, in general. Apart from this, n-gram model evaluation techniques, cannot take into account dependencies which are more than n (n as in n-gram) distance apart, and hence give a lower score to sentences which are semanticalyy re-structured. For example, if we are taking a 2-gram model, , BLEU will only mildly penalize swapping of cause and effect clauses (e.g. A because B instead of B because A), especially when the arguments A and B are long phrases. This is especially ineffective in domains like legal domains.  </br>
 Bert score, since it calculates the similarity score based on contextual embedding assigns a better performance to the system. </br>
-The similarity matrix used here is cosine similarity between the generated sentence and actual sentence, (treating them as vectors of dimension k, k being the length of the sentence. This is done by taking the dot product of the two. By definition if we have V and W as two vectors, then 
-![image](https://user-images.githubusercontent.com/82941475/125023307-37c35400-e09c-11eb-94e6-50c633a8a35d.png).
- If the angle between two vectors is very small (i.e. if they are similar), ![formula](https://render.githubusercontent.com/render/math?math=\cos(\theta)) will be close to one. Here is the complete radial for the different values of  ![formula](https://render.githubusercontent.com/render/math?math=\cos(\theta)) and what it means.
+The similarity matrix used here is cosine similarity between the generated sentence and actual sentence, (treating them as vectors of dimension k, k being the length of the sentence. This is done by taking the dot product of the two. By definition if we have A and B as two vectors, then 
+![image](https://user-images.githubusercontent.com/82941475/125023307-37c35400-e09c-11eb-94e6-50c633a8a35d.png). </br>
+ If the angle between two vectors is very small (i.e. if they are similar), ![formula](https://render.githubusercontent.com/render/math?math=\cos(\theta)) will be close to one. Here is the complete radial for the different values of  ![formula](https://render.githubusercontent.com/render/math?math=\cos(\theta)) and what it means.</br>
+ ![image](https://user-images.githubusercontent.com/82941475/125023431-896bde80-e09c-11eb-9dba-65f7a4c4b742.png) </br>
 
-I
 ## Implementation and Discussion
 ### Precision, Recall and F1 Score 
-### BLEU Score
+```code
+#Function to calculate Precision, Recall and F1 score.
+
+def cal_prf1(pred,y):
+    tc=torch.zeros(len(Label.vocab)).to(device) #tc gives us how many are true positive for a class
+    fc=torch.zeros(len(Label.vocab)).to(device) #fc gives us how many are false positive for a class
+    top_pred=pred.argmax(1,keepdim=True)
+    top_pred=top_pred.squeeze()
+    for i,j in enumerate(top_pred):
+      if j==y[i]:
+        tc[j]+=1
+      else:
+        fc[j]+=1
+    #print(tc, fc)
+    #To avoid 0/0 kind of scenario, 0 is replaced with a very small number 0.00001
+    rep=torch.tensor(0.00001).to(device) 
+    tc=torch.where(tc==0,rep,tc)
+    fc=torch.where(fc==0,rep,fc)
+    #pc gives class-wise precision 
+    pc=tc/(tc+fc) 
+    y=y.int()
+    #y.bincount() gives the total number of instances in every class as y is the actual labels
+    #print(y.bincount())
+    #rc gives class-wise recall 
+    rc=tc/y.bincount()
+    # The average of precision and recall gives the precision and recall for the model. 
+    #Here I have given equal weights to each class. But it can be a weighted average.
+    p=pc.sum()/len(pc)
+    r=rc.sum()/len(rc)
+    f1=2*p*r/(r+p)
+    return p,r,f1
+```
+#### Training log 
+Here is the training log for first five epochs: </br>
+epoch | Train Loss | Train Acc | Train Precision | Train Recall | Train F1 Score | Test Loss | Test Acc | Test Precision | Test Recall | Test F1 Score
+-----|----------|---------|----------------|-------------|--------------|--------------|--------------|----------------|------|--------
+  1 |	 4892.785 |  25.66% | 0.242 | 0.21 | 0.2223016 |	4692.892 | 25.39% |	 0.242 | 0.21 |     0.2223016 
+  2 |	4506.224 |  27.02% |	  0.360 |0.23 | 0.2804562 |	4323.563 |   28.18% |	 0.360 | 0.23 |   0.2804562 
+  3 |	4152.384 | 29.80%|	 0.371 | 0.22 |   0.2741793 |	 3984.663 |  25.85% |	 0.371 | 0.22 |   0.2741793 
+  4 | 3827.110 | 31.74% |	 0.392 | 0.29 |  0.3329042 |	3672.595 |  34.24%  |	  0.392 |  0.29 | 0.3329042 
+  5 |	 3527.245 | 35.30% |	0.407 | 0.29 |  0.3399828 |	 3384.608 |  33.83%  |	0.407 | 0.29 |   0.3399828 
+  
+ ####  Results discussion
+ As can be seen as the model learns aligns itself to the training data ( i.e loss reduces), precision, recall and hence f1 score become better for the training data. When the model is evaluated on the test data (unseen data) , the results are comparable.
+  ### BLEU Score
 
 ### Perplexity
 ### BERT Score
